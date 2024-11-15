@@ -1,7 +1,7 @@
 [project]
-name = "aidevs3"
+name = "pydevs"
 version = "0.1.0"
-description = "AI_devs3 course"
+description = "Community repo for AIdevs3"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
