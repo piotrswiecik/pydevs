@@ -1,0 +1,50 @@
+[project]
+name = "aidevs3"
+version = "0.1.0"
+description = "AI_devs3 course"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Piotr Święcik", email = "piotr.swiecik@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry]
+name = "pydevs"
+version = "0.1.0"
+description = "Community repo for AIdevs3"
+authors = ["piotr.swiecik <piotr.swiecik@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+openai = "^1.54.4"
+langfuse = "^2.53.9"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
+httpx = "^0.27.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.4"
+black = "^24.10.0"
+isort = "^5.13.2"
+mypy = "^1.13.0"
+pytest = "^8.3.3"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = [
+    "tests",
+    "integration",
+]
+log_cli = "True"
+log_cli_level = "INFO"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
