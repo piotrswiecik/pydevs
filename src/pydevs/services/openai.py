@@ -54,8 +54,7 @@ class OpenAIService(AIServiceBase):
     ):
         try:
             api_response = self._client.embeddings.create(model=model, input=payload)
-            embedding = api_response.data[0].embedding
-            return EmbeddingResponse(embedding=embedding)  # TODO: add usage
+            return api_response.data[0].embedding
         except (AttributeError, IndexError):
             raise AIServiceError("Invalid API response")
         except Exception as e:

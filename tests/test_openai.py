@@ -1,3 +1,4 @@
+import logging
 from dotenv import load_dotenv
 
 from pydevs.services.openai import OpenAIService
@@ -31,3 +32,12 @@ def test_openai_completion_with_temperature():
     assert "content" in response[0]
     assert response[0]["role"] == "assistant"
     assert isinstance(response[0]["content"], str)
+
+
+def test_openai_embeding():
+    service = OpenAIService()
+    response = service.text_embedding(
+        payload="Hey bro, how are you?",
+        model="text-embedding-3-small",
+    )
+    assert isinstance(response, list)
