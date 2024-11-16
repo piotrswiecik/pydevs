@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import Dict, List, Union
 
 from pydevs.types.completion import (
     TextCompletionConfig,
@@ -11,7 +11,7 @@ from pydevs.types.completion import (
 class AIServiceBase(ABC):
     @abstractmethod
     def text_completion(
-        self, payload: List[TextCompletionPayload], config: TextCompletionConfig
+        self, payload: Union[List[TextCompletionPayload], List[Dict]], config: TextCompletionConfig
     ) -> TextCompletionResponse:  # TODO: add support for streaming chunks
         pass
 

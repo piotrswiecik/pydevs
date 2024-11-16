@@ -1,10 +1,10 @@
 import os
-from typing import Optional
+from typing import Dict, List, Optional
 
 from openai import OpenAI
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import TextCompletionResponse
+from pydevs.types.completion import TextCompletionResponse, TextCompletionPayload
 
 
 class OpenAIService(AIServiceBase):
@@ -14,7 +14,17 @@ class OpenAIService(AIServiceBase):
         self._api_key = api_key
         self._client = OpenAI(api_key=api_key)
 
+    def _parse_dict(self, payload: List[Dict]):
+        return [
+            TextCompletionPayload(**item) for item in payload
+        ]
+
     def text_completion(self, payload, config):
+        if isinstance(payload, list) and isinstance(payload[0], dict):
+            try:
+                payload = self._parse_dict(payload)
+            except Exception as e:
+                raise AIServiceError(f"Invalid input: {e}")
         try:
             api_response = self._client.chat.completions.create(
                 model=config.model,
