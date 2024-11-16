@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from openai import OpenAI
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import TextCompletionResponse, TextCompletionPayload
+from pydevs.types.completion import TextCompletionConfig, TextCompletionResponse, TextCompletionPayload
 
 
 class OpenAIService(AIServiceBase):
@@ -18,12 +18,16 @@ class OpenAIService(AIServiceBase):
     def _parse_dict(self, payload: List[Dict]):
         return [TextCompletionPayload(**item) for item in payload]
 
-    def text_completion(self, payload, config):
+    def text_completion(self, payload, config = None):
         if isinstance(payload, list) and isinstance(payload[0], dict):
             try:
                 payload = self._parse_dict(payload)
             except Exception as e:
                 raise AIServiceError(f"Invalid input: {e}")
+            
+        if config is None:
+            config = TextCompletionConfig() # use defaults
+
         try:
             api_response = self._client.chat.completions.create(
                 model=config.model or self._default_model,
