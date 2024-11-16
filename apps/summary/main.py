@@ -1,11 +1,11 @@
 import os
 import sys
+from pathlib import Path
 
 from dotenv import load_dotenv
 
 from pydevs.services.base import AIServiceBase
-from pydevs.services.openai import OpenAIService
-from pydevs.types.completion import TextCompletionConfig, TextCompletionPayload
+from pydevs.services.ollama import OllamaService
 
 extraction_types = [
     {
@@ -83,7 +83,27 @@ if __name__ == "__main__":
         print(f"Path {path} does not exist.")
         sys.exit(1)
 
-    openai = OpenAIService()
+    ai = OllamaService(default_model="gemma2")
 
     with open(path, "r") as f:
         content = f.read()
+
+    # feature extraction from the document
+    extracted_results = []
+    for et in extraction_types:
+        extract = extract_information(
+            ai,
+            "Test",
+            content,
+            et["key"],
+            et["description"],
+        )
+        extracted_results.append(
+            {"type": et["key"], "description": et["description"], "content": extract}
+        )
+
+    # save extracted features
+    for er in extracted_results:
+        _pth = Path(path).parent / f"{Path(path).stem}_{er['type']}.txt"
+        with open(_pth, "w") as f:
+            f.write(er["content"])
