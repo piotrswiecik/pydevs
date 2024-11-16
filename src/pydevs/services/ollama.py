@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from typing import Optional
@@ -5,7 +6,7 @@ from typing import Optional
 import requests
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import OllamaTextCompletionConfig
+from pydevs.types.completion import OllamaTextCompletionConfig, TextCompletionPayload
 
 
 class OllamaService(AIServiceBase):
@@ -35,9 +36,16 @@ class OllamaService(AIServiceBase):
                 )
             config = OllamaTextCompletionConfig(model=self._default_model)
 
+        messages = []
+        for item in payload:
+            if isinstance(item, TextCompletionPayload):
+                messages.append(item.model_dump())
+            else:
+                messages.append(item)
+
         json_payload = {
             "model": config.model,
-            "messages": payload,
+            "messages": messages,
             "stream": config.stream,
             "format": "json",
             "options": {"temperature": config.temperature, "num_ctx": config.ctx_size},
