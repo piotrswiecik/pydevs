@@ -9,7 +9,7 @@ from pydevs.types.completion import OllamaTextCompletionConfig
 
 
 class OllamaService(AIServiceBase):
-    def __init__(self, default_model: Optional[str], host_url: Optional[str]):
+    def __init__(self, default_model: Optional[str] = None, host_url: Optional[str] = None):
         self._default_model = default_model
 
         if host_url is None:
