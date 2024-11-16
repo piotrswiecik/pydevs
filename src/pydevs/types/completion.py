@@ -16,6 +16,12 @@ class TextCompletionConfig(BaseModel):
     temperature: Optional[float] = 1.0
 
 
+class OllamaTextCompletionConfig(BaseModel):
+    model: str
+    stream: bool = False
+    temperature: float = 1.0
+
+
 class Usage(BaseModel):
     completion_tokens: int
     prompt_tokens: int
