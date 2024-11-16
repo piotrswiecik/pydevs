@@ -40,7 +40,7 @@ class OllamaService(AIServiceBase):
             "messages": payload,
             "stream": config.stream,
             "format": "json",
-            "options": {"temperature": config.temperature},
+            "options": {"temperature": config.temperature, "num_ctx": config.ctx_size},
         }
 
         try:

@@ -20,6 +20,7 @@ class OllamaTextCompletionConfig(BaseModel):
     model: str
     stream: bool = False
     temperature: float = 1.0
+    ctx_size: int = 2048
 
 
 class Usage(BaseModel):
