@@ -1,15 +1,13 @@
-import pytest
 import logging
+
+import pytest
 from dotenv import load_dotenv
 
 from pydevs.services.openai import OpenAIService
-from pydevs.types.completion import (
-    EmbeddingResponse,
-    TextCompletionConfig as Config,
-    TextCompletionPayload as Payload,
-    TextCompletionResponse,
-)
-
+from pydevs.types.completion import EmbeddingResponse
+from pydevs.types.completion import TextCompletionConfig as Config
+from pydevs.types.completion import TextCompletionPayload as Payload
+from pydevs.types.completion import TextCompletionResponse
 
 load_dotenv()
 

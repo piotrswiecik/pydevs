@@ -7,7 +7,6 @@ from pydevs.services.base import AIServiceBase
 from pydevs.services.openai import OpenAIService
 from pydevs.types.completion import TextCompletionConfig, TextCompletionPayload
 
-
 extraction_types = [
     {
         "key": "topics",

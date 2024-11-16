@@ -7,8 +7,8 @@ from pydevs.services.base import AIServiceBase, AIServiceError
 from pydevs.types.completion import (
     EmbeddingResponse,
     TextCompletionConfig,
-    TextCompletionResponse,
     TextCompletionPayload,
+    TextCompletionResponse,
 )
 
 
@@ -52,12 +52,12 @@ class OpenAIService(AIServiceBase):
     def text_embedding(
         self,
         payload: str,
-        model: Literal["text-embedding-3-small", "text-embedding-3-large"] = "text-embedding-3-small",
+        model: Literal[
+            "text-embedding-3-small", "text-embedding-3-large"
+        ] = "text-embedding-3-small",
     ):
         try:
-            api_response = self._client.embeddings.create(
-                model=model, input=payload
-            )
+            api_response = self._client.embeddings.create(model=model, input=payload)
             embedding = api_response.data[0].embedding
             return EmbeddingResponse(embedding=embedding)  # TODO: add usage
         except (AttributeError, IndexError):
