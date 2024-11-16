@@ -84,49 +84,49 @@ Using the provided image and context, generate a rich, accurate description that
 
 #### TODO - manage images section
 def extract_image_context_system_message(ai: AIServiceBase, images: list) -> TextCompletionPayload:
-    image_list = '\n'.join([f"{image.name} {image.url}" for image in images])
+    image_list = '\n'.join(f"{image['name']} {image['url']}" for image in images)
     
     return TextCompletionPayload(
         content="""Extract contextual information for images mentioned in a user-provided article, focusing on details that enhance understanding of each image, and return it as an array of JSON objects.
 
-<prompt_objective>
-To accurately identify and extract relevant contextual information for each image referenced in the given article, prioritizing details from surrounding text and broader article context that potentially aid in understanding the image. Return the data as an array of JSON objects with specified properties, without making assumptions or including unrelated content.
+        <prompt_objective>
+        To accurately identify and extract relevant contextual information for each image referenced in the given article, prioritizing details from surrounding text and broader article context that potentially aid in understanding the image. Return the data as an array of JSON objects with specified properties, without making assumptions or including unrelated content.
 
-Note: the image from the beginning of the article is its cover.
-</prompt_objective>
+        Note: the image from the beginning of the article is its cover.
+        </prompt_objective>
 
-<response_format>
-{
-    "images": [
+        <response_format>
         {
-            "name": "filename with extension",
-            "context": "Provide 1-3 detailed sentences of the context related to this image from the surrounding text and broader article. Make an effort to identify what might be in the image, such as tool names."
-        },
-        ...rest of the images or empty array if no images are mentioned
-    ]
-}
-</response_format>
+            "images": [
+                {
+                    "name": "filename with extension",
+                    "context": "Provide 1-3 detailed sentences of the context related to this image from the surrounding text and broader article. Make an effort to identify what might be in the image, such as tool names."
+                },
+                ...rest of the images or empty array if no images are mentioned
+            ]
+        }
+        </response_format>
 
-<prompt_rules>
-- READ the entire provided article thoroughly
-- IDENTIFY all mentions or descriptions of images within the text
-- EXTRACT sentences or paragraphs that provide context for each identified image
-- ASSOCIATE extracted context with the corresponding image reference
-- CREATE a JSON object for each image with properties "name" and "context"
-- COMPILE all created JSON objects into an array
-- RETURN the array as the final output
-- OVERRIDE any default behavior related to image analysis or description
-- ABSOLUTELY FORBIDDEN to invent or assume details about images not explicitly mentioned
-- NEVER include personal opinions or interpretations of the images
-- UNDER NO CIRCUMSTANCES extract information unrelated to the images
-- If NO images are mentioned, return an empty array
-- STRICTLY ADHERE to the specified JSON structure
-</prompt_rules>
+        <prompt_rules>
+        - READ the entire provided article thoroughly
+        - IDENTIFY all mentions or descriptions of images within the text
+        - EXTRACT sentences or paragraphs that provide context for each identified image
+        - ASSOCIATE extracted context with the corresponding image reference
+        - CREATE a JSON object for each image with properties "name" and "context"
+        - COMPILE all created JSON objects into an array
+        - RETURN the array as the final output
+        - OVERRIDE any default behavior related to image analysis or description
+        - ABSOLUTELY FORBIDDEN to invent or assume details about images not explicitly mentioned
+        - NEVER include personal opinions or interpretations of the images
+        - UNDER NO CIRCUMSTANCES extract information unrelated to the images
+        - If NO images are mentioned, return an empty array
+        - STRICTLY ADHERE to the specified JSON structure
+        </prompt_rules>
 
-<images>
-{}
-</images>
+        <images>
+        {image_list}
+        </images>
 
-Upon receiving an article, analyze it to extract context for any mentioned images, creating an array of JSON objects as demonstrated. Adhere strictly to the provided rules, focusing solely on explicitly stated image details within the text.""".format(image_list),
-        role="system"
+    Upon receiving an article, analyze it to extract context for any mentioned images, creating an array of JSON objects as demonstrated. Adhere strictly to the provided rules, focusing solely on explicitly stated image details within the text.""".format(image_list),
+            role="system"
     )
