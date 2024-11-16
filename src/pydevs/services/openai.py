@@ -4,12 +4,7 @@ from typing import Dict, List, Literal, Optional
 from openai import OpenAI
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import (
-    EmbeddingResponse,
-)
-
-from pydevs.types.completion import OpenAIMessage
-
+from pydevs.types.completion import EmbeddingResponse, OpenAIMessage
 
 
 class OpenAIService(AIServiceBase):
@@ -20,10 +15,20 @@ class OpenAIService(AIServiceBase):
         self._client = OpenAI(api_key=api_key)
         self._default_model = default_model
 
-    def text_completion(self, messages: list, model: Optional[str] = None, max_tokens: Optional[int] = None, temperature: Optional[float] = None, json_mode: bool = False, stream: bool = False) -> List[OpenAIMessage]:
+    def text_completion(
+        self,
+        messages: list,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+        json_mode: bool = False,
+        stream: bool = False,
+    ) -> List[OpenAIMessage]:
         if model is None and self._default_model is None:
-            raise ValueError("Model must be provided as kwarg or during client initialization")
-        
+            raise ValueError(
+                "Model must be provided as kwarg or during client initialization"
+            )
+
         try:
             api_response = self._client.chat.completions.create(
                 model=model or self._default_model,
@@ -34,7 +39,8 @@ class OpenAIService(AIServiceBase):
                 temperature=temperature,
             )
             return [
-                {"role": choice.message.role, "content": choice.message.content} for choice in api_response.choices
+                {"role": choice.message.role, "content": choice.message.content}
+                for choice in api_response.choices
             ]
         except Exception as e:
             raise AIServiceError(f"OpenAI API error: {e}")

@@ -1,7 +1,6 @@
 import logging
 
 from pydevs.services.ollama import OllamaService
-from pydevs.types.completion import OllamaTextCompletionConfig
 
 
 def test_ollama_completion_with_defaults():
