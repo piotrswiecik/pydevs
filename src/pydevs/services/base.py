@@ -11,7 +11,9 @@ from pydevs.types.completion import (
 class AIServiceBase(ABC):
     @abstractmethod
     def text_completion(
-        self, payload: Union[List[TextCompletionPayload], List[Dict]], config: TextCompletionConfig
+        self,
+        payload: Union[List[TextCompletionPayload], List[Dict]],
+        config: TextCompletionConfig,
     ) -> TextCompletionResponse:  # TODO: add support for streaming chunks
         pass
 

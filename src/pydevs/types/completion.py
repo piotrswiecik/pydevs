@@ -9,7 +9,7 @@ class TextCompletionPayload(BaseModel):
 
 
 class TextCompletionConfig(BaseModel):
-    model: str
+    model: Optional[str] = None
     stream: bool = False
     json_mode: bool = False
     max_completion_tokens: Optional[int] = None
