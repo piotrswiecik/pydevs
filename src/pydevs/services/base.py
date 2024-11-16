@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union
 
 from pydevs.types.completion import (
+    EmbeddingResponse,
     TextCompletionConfig,
     TextCompletionPayload,
     TextCompletionResponse,
@@ -18,7 +19,7 @@ class AIServiceBase(ABC):
         pass
 
     @abstractmethod
-    def text_embedding(self, payload) -> List[float]:
+    def text_embedding(self, payload) -> EmbeddingResponse:
         pass
 
 

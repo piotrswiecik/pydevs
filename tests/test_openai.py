@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from pydevs.services.openai import OpenAIService
 from pydevs.types.completion import (
+    EmbeddingResponse,
     TextCompletionConfig as Config,
     TextCompletionPayload as Payload,
     TextCompletionResponse,
@@ -78,3 +79,10 @@ def test_completion_with_defaults():
     assert isinstance(response.choices, list)
     assert len(response.choices) == 1
     assert isinstance(response.choices[0], str)
+
+
+def test_embedding():
+    service = OpenAIService()
+    response = service.text_embedding("test")
+    assert isinstance(response, EmbeddingResponse)
+    logging.info(response)

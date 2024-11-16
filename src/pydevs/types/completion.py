@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -23,5 +23,10 @@ class Usage(BaseModel):
 
 
 class TextCompletionResponse(BaseModel):
-    choices: list[str]
+    choices: List[str]
+    usage: Optional[Usage] = None
+
+
+class EmbeddingResponse(BaseModel):
+    embedding: List[float]
     usage: Optional[Usage] = None
