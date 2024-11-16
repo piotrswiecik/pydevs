@@ -6,9 +6,7 @@ from typing import Optional
 import requests
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import (
-    OllamaResponse
-)
+from pydevs.types.completion import OllamaResponse
 
 
 class OllamaService(AIServiceBase):
@@ -33,12 +31,19 @@ class OllamaService(AIServiceBase):
         pass
 
     def text_completion(
-        self, messages: list, model: Optional[str] = None, stream: bool = False, temperature: float = 0.8, ctx_size: int = 2048, format: Optional[str] = None
+        self,
+        messages: list,
+        model: Optional[str] = None,
+        stream: bool = False,
+        temperature: float = 0.8,
+        ctx_size: int = 2048,
+        format: Optional[str] = None,
     ) -> OllamaResponse:
-        
         if model is None:
             if self._default_model is None:
-                raise ValueError("Model must be provided as kwarg or during client initialization")
+                raise ValueError(
+                    "Model must be provided as kwarg or during client initialization"
+                )
 
         json_payload = {
             "model": model,
