@@ -18,9 +18,12 @@ def test_openai_extract_information():
     from apps.summary.main import extract_information
 
     summary = extract_information(
-        service, "Test", text, "entities", "Mentioned people, places, or things mentioned in the article. Skip the links and images.")
+        service,
+        "Test",
+        text,
+        "entities",
+        "Mentioned people, places, or things mentioned in the article. Skip the links and images.",
+    )
 
     logging.info(summary)
     # TODO: assertion
-    
-    
