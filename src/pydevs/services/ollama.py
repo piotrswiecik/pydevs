@@ -6,7 +6,7 @@ from typing import Optional
 import requests
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import OllamaTextCompletionConfig, TextCompletionPayload
+from pydevs.types.completion import OllamaTextCompletionConfig, TextCompletionPayload, TextCompletionResponse
 
 
 class OllamaService(AIServiceBase):
@@ -28,7 +28,7 @@ class OllamaService(AIServiceBase):
     def _health(self):
         pass
 
-    def text_completion(self, payload, config: OllamaTextCompletionConfig = None):
+    def text_completion(self, payload, config: OllamaTextCompletionConfig = None) -> TextCompletionResponse:
         if config is None:
             if self._default_model is None:
                 raise ValueError(
@@ -58,7 +58,13 @@ class OllamaService(AIServiceBase):
                 headers={"Content-Type": "application/json"},
             )
             response.raise_for_status()  # TODO: proper status & error handling
-            return response.json()
+            json_data = response.json()
+            try:
+                return TextCompletionResponse(
+                        choices=[json_data["message"]["content"]]
+                    )
+            except KeyError:
+                raise AIServiceError("Invalid API response format")
         except Exception as e:
             raise AIServiceError(f"Ollama API error: {e}")
 
