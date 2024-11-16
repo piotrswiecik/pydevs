@@ -1,6 +1,10 @@
-from typing import List, Optional
+from typing import List, Optional, TypedDict
 
 from pydantic import BaseModel
+
+
+OllamaMessage = TypedDict("OllamaMessage", {"role": str, "content": str})
+
 
 
 class TextCompletionPayload(BaseModel):

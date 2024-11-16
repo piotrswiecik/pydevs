@@ -10,9 +10,10 @@ def test_ollama_completion_with_defaults():
         messages=[{"role": "user", "content": "Hello, how are you?"}],
         **{"model": "gemma2"},
     )
-    assert completion["role"] == "assistant"
-    assert completion["content"] is not None
-    assert isinstance(completion["content"], str)
+    assert len(completion) == 1
+    assert completion[0]["role"] == "assistant"
+    assert completion[0]["content"] is not None
+    assert isinstance(completion[0]["content"], str)
 
 
 def test_ollama_completion_with_temperature():
@@ -21,9 +22,9 @@ def test_ollama_completion_with_temperature():
         messages=[{"role": "user", "content": "Hello, how are you?"}],
         **{"model": "gemma2", "temperature": 0.5},
     )
-    assert completion["role"] == "assistant"
-    assert completion["content"] is not None
-    assert isinstance(completion["content"], str)
+    assert completion[0]["role"] == "assistant"
+    assert completion[0]["content"] is not None
+    assert isinstance(completion[0]["content"], str)
 
 
 def test_ollama_completion_with_max_token_window():
@@ -32,6 +33,6 @@ def test_ollama_completion_with_max_token_window():
         messages=[{"role": "user", "content": "Hello, how are you?"}],
         **{"model": "gemma2", "ctx_size": 4096},
     )
-    assert completion["role"] == "assistant"
-    assert completion["content"] is not None
-    assert isinstance(completion["content"], str)
+    assert completion[0]["role"] == "assistant"
+    assert completion[0]["content"] is not None
+    assert isinstance(completion[0]["content"], str)

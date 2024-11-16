@@ -1,12 +1,12 @@
 import json
 import os
 import re
-from typing import Optional
+from typing import List, Optional
 
 import requests
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import OllamaResponse
+from pydevs.types.completion import OllamaMessage
 
 
 class OllamaService(AIServiceBase):
@@ -38,7 +38,7 @@ class OllamaService(AIServiceBase):
         temperature: float = 0.8,
         ctx_size: int = 2048,
         format: Optional[str] = None,
-    ) -> OllamaResponse:
+    ) -> List[OllamaMessage]:
         if model is None:
             if self._default_model is None:
                 raise ValueError(
@@ -61,7 +61,7 @@ class OllamaService(AIServiceBase):
             )
             response.raise_for_status()  # TODO: proper status & error handling
             try:
-                return response.json()["message"]
+                return [response.json()["message"]]
             except (json.JSONDecodeError, KeyError):
                 raise AIServiceError("Ollama API response format error")
         except Exception as e:
