@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 from pathlib import Path
@@ -6,6 +7,7 @@ from dotenv import load_dotenv
 
 from pydevs.services.base import AIServiceBase
 from pydevs.services.ollama import OllamaService
+from pydevs.services.openai import OpenAIService
 
 extraction_types = [
     {
@@ -41,10 +43,10 @@ extraction_types = [
 
 def extract_information(
     ai: AIServiceBase, title: str, text: str, extr_type: str, extr_des: str
-):
-    extraction_message = TextCompletionPayload(
-        role="system",
-        content=f"""
+) -> str:
+    extraction_message = {
+        "role": "system",
+        "content": f"""
         Extract only {extr_type}:{extr_des} from user message under the content of the article titled "{title}".
         Transform the content into clear, structured, simple bullet points without formatting except links and images.
         
@@ -52,17 +54,68 @@ def extract_information(
 
         Keep full accuracy of the original message.
         """,
-    )
+    }
 
-    user_message = TextCompletionPayload(
-        role="user",
-        content=f"Here's the article titled '{title}' with the content to extract information from: {text}",
-    )
+    user_message = {
+        "role": "user",
+        "content": f"Here's the article titled '{title}' with the content to extract information from: {text}",
+    }
 
     response = ai.text_completion(
-        payload=[extraction_message, user_message],
+        messages=[user_message],
+        **{"temperature": 0.6}
     )
-    return str(response.choices[0])
+
+    try:
+        return response[0]["content"]
+    except (KeyError, IndexError):
+        logging.error("Invalid response from AI service.")
+
+
+def draft_summary(ai: AIServiceBase, title: str, article: str, context: str, entities: str, links: str, topics: str, takeaways: str) -> str:
+    prompt = f"""
+    As a copywriter, create a standalone, fully detailed article based on "${title}" that can be understood without reading the original. Write in markdown format, incorporating all images within the content. The article must:
+
+    Write in Polish, ensuring every crucial element from the original is included while:
+    - Stay driven and motivated, ensuring you never miss the details needed to understand the article
+    - NEVER reference to the original article
+    - Always preserve original headers and subheaders
+    - Mimic the original author's writing style, tone, expressions and voice
+    - Presenting ALL main points with complete context and explanation
+    - Following the original structure and flow without omitting any details
+    - Including every topic, subtopic, and insight comprehensively
+    - Preserving the author's writing characteristics and perspective
+    - Ensuring readers can fully grasp the subject matter without prior knowledge
+    - Use title: "${title}" as the title of the article you create. Follow all other headers and subheaders from the original article
+    - Include cover image
+
+    Before writing, examine the original to capture:
+    * Writing style elements
+    * All images, links and vimeo videos from the original article
+    * Include examples, quotes and keypoints from the original article
+    * Language patterns and tone
+    * Rhetorical approaches
+    * Argument presentation methods
+
+    Note: You're forbidden to use high-emotional language such as "revolutionary", "innovative", "powerful", "amazing", "game-changer", "breakthrough", "dive in", "delve in", "dive deeper" etc.
+
+    Reference and integrate ALL of the following elements in markdown format:
+
+    <context>${context}</context>
+    <entities>${entities}</entities>
+    <links>${links}</links>
+    <topics>${topics}</topics>
+    <key_insights>${takeaways}</key_insights>
+
+    <original_article>${article}</original_article>
+
+    Create the new article within <final_answer> tags. The final text must stand alone as a complete work, containing all necessary information, context, and explanations from the original article. No detail should be left unexplained or assumed as prior knowledge.
+    """
+    response = ai.text_completion(
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return response[0]["content"]
+
 
 
 def detailed_summary():
@@ -83,27 +136,42 @@ if __name__ == "__main__":
         print(f"Path {path} does not exist.")
         sys.exit(1)
 
-    ai = OllamaService(default_model="gemma2")
+    ai = OpenAIService(default_model="gpt-4o-mini")
 
     with open(path, "r") as f:
         content = f.read()
 
     # feature extraction from the document
-    extracted_results = []
+    extracted_results = dict()
     for et in extraction_types:
         extract = extract_information(
             ai,
-            "Test",
+            "Generatywne AI w praktyce",
             content,
             et["key"],
             et["description"],
         )
-        extracted_results.append(
-            {"type": et["key"], "description": et["description"], "content": extract}
-        )
+        extracted_results.update({
+            et["key"]: extract
+        })
 
     # save extracted features
-    for er in extracted_results:
-        _pth = Path(path).parent / f"{Path(path).stem}_{er['type']}.txt"
+    for er_key, er_val in extracted_results.items():
+        _pth = Path(path).parent / f"{Path(path).stem}_{er_key}.txt"
         with open(_pth, "w") as f:
-            f.write(er["content"])
+            f.write(er_val)
+
+    draft = draft_summary(
+        ai,
+        "Generatywne AI w praktyce",
+        content,
+        extracted_results["context"],
+        extracted_results["entities"],
+        extracted_results["links"],
+        extracted_results["topics"],
+        extracted_results["takeaways"],
+    )
+
+    _pth = Path(path).parent / f"{Path(path).stem}_draft.md"
+    with open(_pth, "w") as f:
+        f.write(draft)
