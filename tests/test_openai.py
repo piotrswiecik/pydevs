@@ -3,7 +3,11 @@ import logging
 from dotenv import load_dotenv
 
 from pydevs.services.openai import OpenAIService
-from pydevs.types.completion import TextCompletionConfig as Config, TextCompletionPayload as Payload
+from pydevs.types.completion import (
+    TextCompletionConfig as Config,
+    TextCompletionPayload as Payload,
+    TextCompletionResponse,
+)
 
 
 load_dotenv()
@@ -15,9 +19,10 @@ def test_completion_from_object():
         payload=[Payload(role="system", content="Hey bro, this is a test!")],
         config=Config(model="gpt-4o-mini", max_completion_tokens=10),
     )
-    assert isinstance(response, list)
-    assert len(response) == 1
-    assert isinstance(response[0], str)
+    assert isinstance(response, TextCompletionResponse)
+    assert isinstance(response.choices, list)
+    assert len(response.choices) == 1
+    assert isinstance(response.choices[0], str)
 
 
 def test_completion_from_dict():
@@ -26,9 +31,10 @@ def test_completion_from_dict():
         payload=[{"role": "system", "content": "Hey bro, this is a test!"}],
         config=Config(model="gpt-4o-mini", max_completion_tokens=10),
     )
-    assert isinstance(response, list)
-    assert len(response) == 1
-    assert isinstance(response[0], str)
+    assert isinstance(response, TextCompletionResponse)
+    assert isinstance(response.choices, list)
+    assert len(response.choices) == 1
+    assert isinstance(response.choices[0], str)
 
 
 def test_completion_from_dict_invalid_should_raise():
