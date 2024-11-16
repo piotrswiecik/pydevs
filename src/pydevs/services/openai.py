@@ -4,12 +4,7 @@ from typing import Dict, List, Literal, Optional
 from openai import OpenAI
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import (
-    EmbeddingResponse,
-    TextCompletionConfig,
-    TextCompletionPayload,
-    TextCompletionResponse,
-)
+from pydevs.types.completion import OpenAIMessage
 
 
 class OpenAIService(AIServiceBase):
@@ -20,32 +15,33 @@ class OpenAIService(AIServiceBase):
         self._client = OpenAI(api_key=api_key)
         self._default_model = default_model
 
-    def _parse_dict(self, payload: List[Dict]):
-        return [TextCompletionPayload(**item) for item in payload]
-
-    def text_completion(self, payload, config=None):
-        if isinstance(payload, list) and isinstance(payload[0], dict):
-            try:
-                payload = self._parse_dict(payload)
-            except Exception as e:
-                raise AIServiceError(f"Invalid input: {e}")
-
-        if config is None:
-            config = TextCompletionConfig()  # use defaults
+    def text_completion(
+        self,
+        messages: list,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+        json_mode: bool = False,
+        stream: bool = False,
+    ) -> List[OpenAIMessage]:
+        if model is None and self._default_model is None:
+            raise ValueError(
+                "Model must be provided as kwarg or during client initialization"
+            )
 
         try:
             api_response = self._client.chat.completions.create(
-                model=config.model or self._default_model,
-                messages=payload,
-                max_completion_tokens=config.max_completion_tokens,
-                response_format={"type": "json_object" if config.json_mode else "text"},
-                stream=config.stream,
-                temperature=config.temperature,
+                model=model or self._default_model,
+                messages=messages,
+                max_completion_tokens=max_tokens,
+                response_format={"type": "json_object" if json_mode else "text"},
+                stream=stream,
+                temperature=temperature,
             )
-            choices: list[str] = [
-                choice.message.content for choice in api_response.choices
+            return [
+                {"role": choice.message.role, "content": choice.message.content}
+                for choice in api_response.choices
             ]
-            return TextCompletionResponse(choices=choices)  # TODO: add usage
         except Exception as e:
             raise AIServiceError(f"OpenAI API error: {e}")
 
@@ -58,8 +54,7 @@ class OpenAIService(AIServiceBase):
     ):
         try:
             api_response = self._client.embeddings.create(model=model, input=payload)
-            embedding = api_response.data[0].embedding
-            return EmbeddingResponse(embedding=embedding)  # TODO: add usage
+            return api_response.data[0].embedding
         except (AttributeError, IndexError):
             raise AIServiceError("Invalid API response")
         except Exception as e:

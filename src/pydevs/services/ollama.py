@@ -1,16 +1,12 @@
 import json
 import os
 import re
-from typing import Optional
+from typing import List, Optional
 
 import requests
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import (
-    OllamaTextCompletionConfig,
-    TextCompletionPayload,
-    TextCompletionResponse,
-)
+from pydevs.types.completion import OllamaMessage
 
 
 class OllamaService(AIServiceBase):
@@ -35,28 +31,26 @@ class OllamaService(AIServiceBase):
         pass
 
     def text_completion(
-        self, payload, config: OllamaTextCompletionConfig = None
-    ) -> TextCompletionResponse:
-        if config is None:
+        self,
+        messages: list,
+        model: Optional[str] = None,
+        stream: bool = False,
+        temperature: float = 0.8,
+        ctx_size: int = 2048,
+        format: Optional[str] = None,
+    ) -> List[OllamaMessage]:
+        if model is None:
             if self._default_model is None:
                 raise ValueError(
-                    "Default model must be provided in the config or during initialization"
+                    "Model must be provided as kwarg or during client initialization"
                 )
-            config = OllamaTextCompletionConfig(model=self._default_model)
-
-        messages = []
-        for item in payload:
-            if isinstance(item, TextCompletionPayload):
-                messages.append(item.model_dump())
-            else:
-                messages.append(item)
 
         json_payload = {
-            "model": config.model,
+            "model": model or self._default_model,
             "messages": messages,
-            "stream": config.stream,
-            "format": "json",
-            "options": {"temperature": config.temperature, "num_ctx": config.ctx_size},
+            "stream": stream,
+            "format": format,
+            "options": {"temperature": temperature, "num_ctx": ctx_size},
         }
 
         try:
@@ -65,12 +59,14 @@ class OllamaService(AIServiceBase):
                 json=json_payload,
                 headers={"Content-Type": "application/json"},
             )
-            response.raise_for_status()  # TODO: proper status & error handling
-            json_data = response.json()
             try:
-                return TextCompletionResponse(choices=[json_data["message"]["content"]])
-            except KeyError:
-                raise AIServiceError("Invalid API response format")
+                response.raise_for_status()
+            except requests.HTTPError:
+                raise AIServiceError(response.json())
+            try:
+                return [response.json()["message"]]
+            except (json.JSONDecodeError, KeyError):
+                raise AIServiceError("Ollama API response format error")
         except Exception as e:
             raise AIServiceError(f"Ollama API error: {e}")
 
