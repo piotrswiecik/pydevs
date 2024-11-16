@@ -4,7 +4,7 @@ from typing import Dict, List, Literal, Optional
 from openai import OpenAI
 
 from pydevs.services.base import AIServiceBase, AIServiceError
-from pydevs.types.completion import EmbeddingResponse, OpenAIMessage
+from pydevs.types.completion import OpenAIMessage
 
 
 class OpenAIService(AIServiceBase):

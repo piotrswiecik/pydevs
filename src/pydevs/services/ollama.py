@@ -46,7 +46,7 @@ class OllamaService(AIServiceBase):
                 )
 
         json_payload = {
-            "model": model,
+            "model": model or self._default_model,
             "messages": messages,
             "stream": stream,
             "format": format,
@@ -59,7 +59,10 @@ class OllamaService(AIServiceBase):
                 json=json_payload,
                 headers={"Content-Type": "application/json"},
             )
-            response.raise_for_status()  # TODO: proper status & error handling
+            try:
+                response.raise_for_status()
+            except requests.HTTPError:
+                raise AIServiceError(response.json())
             try:
                 return [response.json()["message"]]
             except (json.JSONDecodeError, KeyError):

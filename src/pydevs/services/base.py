@@ -1,18 +1,18 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional, Union
+from typing import List
 
-from pydevs.types.completion import EmbeddingResponse
+from pydevs.types.completion import Message
 
 
 class AIServiceBase(ABC):
     @abstractmethod
     def text_completion(
         self, messages, **kwargs
-    ):  # TODO: add support for streaming chunks
+    ) -> List[Message]:  # TODO: add support for streaming chunks
         pass
 
     @abstractmethod
-    def text_embedding(self, payload) -> EmbeddingResponse:
+    def text_embedding(self, payload):
         pass
 
 

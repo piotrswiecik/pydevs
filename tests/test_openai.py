@@ -1,6 +1,3 @@
-import logging
-
-import pytest
 from dotenv import load_dotenv
 
 from pydevs.services.openai import OpenAIService
