@@ -1,7 +1,9 @@
 import logging
 import os
+import re
 import sys
 from pathlib import Path
+from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -116,7 +118,12 @@ def draft_summary(ai: AIServiceBase, title: str, article: str, context: str, ent
     )
     return response[0]["content"]
 
-
+def get_result(content: str, tag_name: str) -> Optional[str]:
+    regex = re.compile(rf"<{tag_name}>(.*?)</{tag_name}>", re.S)
+    match = regex.match(content)
+    if match is None:
+        return match
+    return match.group(1)
 
 def detailed_summary():
     pass
@@ -175,3 +182,5 @@ if __name__ == "__main__":
     _pth = Path(path).parent / f"{Path(path).stem}_draft.md"
     with open(_pth, "w") as f:
         f.write(draft)
+
+    draft_content = get_result(draft, "final_answer")

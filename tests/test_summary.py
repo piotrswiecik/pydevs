@@ -51,3 +51,23 @@ def test_gemma_extract_information():
 
     assert isinstance(summary, str)
     logging.info(summary)
+
+
+def test_get_result():
+    from apps.summary.main import get_result
+
+    content = "<tag>content</tag>"
+    tag_name = "tag"
+    result = get_result(content, tag_name)
+    assert result == "content"
+    logging.info(result)
+
+
+def test_get_result_not_found():
+    from apps.summary.main import get_result
+
+    content = "<tag>content</tag>"
+    tag_name = "not_found"
+    result = get_result(content, tag_name)
+    assert result is None
+    logging.info(result)
