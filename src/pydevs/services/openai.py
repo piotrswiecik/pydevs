@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Literal, Optional
+from typing import Dict, List, Literal, Optional, BinaryIO
 
 from openai import OpenAI
 
@@ -59,3 +59,44 @@ class OpenAIService(AIServiceBase):
             raise AIServiceError("Invalid API response")
         except Exception as e:
             raise AIServiceError(f"OpenAI API error: {e}")
+
+    async def speak(self, text: str) -> bytes:
+        """
+        Convert text to speech using OpenAI's TTS API.
+        
+        Args:
+            text: The text to convert to speech
+            
+        Returns:
+            bytes: The audio data in bytes
+        """
+        try:
+            response = await self._client.audio.speech.create(
+                model="tts-1",
+                voice="alloy",
+                input=text
+            )
+            return response.content
+        except Exception as e:
+            raise AIServiceError(f"OpenAI TTS API error: {e}")
+
+    async def transcribe(self, audio_data: BinaryIO, language: str = 'pl') -> str:
+        """
+        Transcribe audio data to text using OpenAI's Whisper API.
+        
+        Args:
+            audio_data: Binary audio data (file-like object)
+            language: Language code for transcription (default: 'pl' for Polish)
+            
+        Returns:
+            str: The transcribed text
+        """
+        try:
+            transcription = await self._client.audio.transcriptions.create(
+                file=audio_data,
+                language=language,
+                model="whisper-1"
+            )
+            return transcription.text
+        except Exception as e:
+            raise AIServiceError(f"OpenAI transcription API error: {e}")
