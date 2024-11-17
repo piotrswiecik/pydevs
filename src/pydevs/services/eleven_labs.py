@@ -13,7 +13,7 @@ class ElevenLabsService(ABC):
     def __init__(self, api_key: Optional[str] = None):
         if api_key is None:
             load_dotenv()
-            api_key = os.getenv("ELEVEN_LABS_API_KEY")
+            api_key = os.environ.get("ELEVEN_LABS_API_KEY")
         self._api_key = api_key
         self._base_url = "https://api.elevenlabs.io/v1"
         
