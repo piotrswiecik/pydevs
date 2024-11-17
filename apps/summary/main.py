@@ -125,8 +125,81 @@ def get_result(content: str, tag_name: str) -> Optional[str]:
         return match
     return match.group(1)
 
-def detailed_summary():
-    pass
+def critique_summary(ai: AIServiceBase, summary: str, article: str, context: str) -> str:
+    prompt = f"""
+    Analyze the provided compressed version of the article critically, focusing solely on its factual accuracy, structure and comprehensiveness in relation to the given context.
+
+    <analysis_parameters>
+    PRIMARY OBJECTIVE: Compare compressed version against original content with 100% precision requirement.
+
+    VERIFICATION PROTOCOL:
+    - Each statement must match source material precisely
+    - Every concept requires direct source validation
+    - No interpretations or assumptions permitted
+    - Markdown formatting must be exactly preserved
+    - All technical information must maintain complete accuracy
+
+    CRITICAL EVALUATION POINTS:
+    1. Statement-level verification against source
+    2. Technical accuracy assessment
+    3. Format compliance check
+    4. Link and reference validation
+    5. Image placement verification
+    6. Conceptual completeness check
+
+    <original_article>${article}</original_article>
+
+    <context desc="It may help you to understand the article better.">${context}</context>
+
+    <compressed_version>${summary}</compressed_version>
+
+    RESPONSE REQUIREMENTS:
+    - Identify ALL deviations, regardless of scale
+    - Report exact location of each discrepancy
+    - Provide specific correction requirements
+    - Document missing elements precisely
+    - Mark any unauthorized additions
+
+    Your task: Execute comprehensive analysis of compressed version against source material. Document every deviation. No exceptions permitted.
+    """
+    response = ai.text_completion(
+        messages=[{"role": "system", "content": prompt}],
+    )
+    return response[0]["content"]
+
+
+def final_summary(ai: AIServiceBase, refined_draft: str, topics: str, takeaways: str, critique: str, context: str):
+    prompt = f"""
+    Create a final compressed version of the article that starts with an initial concise overview, then covers all the key topics using available knowledge in a condensed manner, and concludes with essential insights and final remarks. 
+        Consider the critique provided and address any issues it raises. 
+
+    Important: Include relevant links and images from the context in markdown format. Do NOT include any links or images that are not explicitly mentioned in the context.
+    Note: You're forbidden to use high-emotional language such as "revolutionary", "innovative", "powerful", "amazing", "game-changer", "breakthrough", "dive in", "delve in", "dive deeper" etc.
+
+    Requirement: Use Polish language.
+
+    Guidelines for compression:
+    - Maintain the core message and key points of the original article
+    - Always preserve original headers and subheaders
+    - Ensure that images, links and videos are present in your response
+    - Eliminate redundancies and non-essential details
+    - Use concise language and sentence structures
+    - Preserve the original article's tone and style in a condensed form
+
+    Provide the final compressed version within <final_answer> tags.
+
+    <refined_draft>${refined_draft}</refined_draft>
+    <topics>${topics}</topics>
+    <key_insights>${takeaways}</key_insights>
+    <critique note="This is important, as it was created based on the initial draft of the compressed version. Consider it before you start writing the final compressed version">${critique}</critique>
+    <context>${context}</context>
+
+    Let's start.
+    """
+    response = ai.text_completion(
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return response[0]["content"]
 
 
 if __name__ == "__main__":
@@ -143,6 +216,7 @@ if __name__ == "__main__":
         print(f"Path {path} does not exist.")
         sys.exit(1)
 
+    # note that this won't run on gemma2 - system prompts required
     ai = OpenAIService(default_model="gpt-4o-mini")
 
     with open(path, "r") as f:
@@ -184,3 +258,30 @@ if __name__ == "__main__":
         f.write(draft)
 
     draft_content = get_result(draft, "final_answer")
+
+    critique = critique_summary(
+        ai,
+        draft_content,
+        content,
+        "\n\n".join([result for result in extracted_results.values()]),
+    )
+
+    _pth = Path(path).parent / f"{Path(path).stem}_critique.md"
+    with open(_pth, "w") as f:
+        f.write(critique)
+
+    final_summary = final_summary(
+        ai,
+        draft_content,
+        extracted_results["topics"],
+        extracted_results["takeaways"],
+        critique,
+        extracted_results["context"],
+    )
+    result = get_result(final_summary, "final_answer")
+
+    _pth = Path(path).parent / f"{Path(path).stem}_final_summary.md"
+    with open(_pth, "w") as f:
+        f.write(final_summary)
+
+    print("DONE!")
