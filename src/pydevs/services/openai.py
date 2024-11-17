@@ -64,7 +64,7 @@ class OpenAIService(AIServiceBase):
         except Exception as e:
             raise AIServiceError(f"OpenAI API error: {e}")
 
-    async def speak(self, text: str) -> bytes:
+    def speak(self, text: str) -> bytes:
         """
         Convert text to speech using OpenAI's TTS API.
         
@@ -75,7 +75,7 @@ class OpenAIService(AIServiceBase):
             bytes: The audio data in bytes
         """
         try:
-            response = await self._client.audio.speech.create(
+            response = self._client.audio.speech.create(
                 model="tts-1",
                 voice="alloy",
                 input=text
@@ -84,7 +84,7 @@ class OpenAIService(AIServiceBase):
         except Exception as e:
             raise AIServiceError(f"OpenAI TTS API error: {e}")
 
-    async def transcribe(self, audio_data: BinaryIO, language: str = 'pl') -> str:
+    def transcribe(self, audio_data: BinaryIO, language: str = 'pl') -> str:
         """
         Transcribe audio data to text using OpenAI's Whisper API.
         
@@ -96,7 +96,7 @@ class OpenAIService(AIServiceBase):
             str: The transcribed text
         """
         try:
-            transcription = await self._client.audio.transcriptions.create(
+            transcription = self._client.audio.transcriptions.create(
                 file=audio_data,
                 language=language,
                 model="whisper-1"

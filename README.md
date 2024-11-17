@@ -9,11 +9,11 @@ Do _apps/ wrzucamy foldery z konkretnymi apkami np. audio, memory, qdrant itp.
 Ready apps:
 - read
 - summary
+- notes
 
 TODO:
 mentioned in S2E5:
-- captions
 - audio-map
 - audio-map-frontend
-- notes
+- captions
 - linear

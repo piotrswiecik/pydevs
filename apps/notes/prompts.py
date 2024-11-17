@@ -2,9 +2,8 @@ from pydevs.types.completion import Message
 from pydevs.services.base import AIServiceBase
 from datetime import datetime
 
-def format_note_system_message(ai: AIServiceBase, note_type: dict) -> Message:
-    return Message(
-        content=f"""Transform raw, unstructured input (especially from voice notes) into clear, concise, and well-formatted notes that enhance productivity and information retrieval.
+def format_note_system_message(ai: AIServiceBase, note_type: dict) -> str:
+    return f"""Transform raw, unstructured input (especially from voice notes) into clear, concise, and well-formatted notes that enhance productivity and information retrieval.
 
 <prompt_objective>
 To analyze, structure, and format input text into highly organized and actionable notes, optimizing for clarity, relevance, and ease of future reference, while preserving all original information.
@@ -36,8 +35,8 @@ Note: Always skip any additional comments, explanations, or encouragement for pr
 
 <formatting_context>
 Current Date: {datetime.now().date().isoformat()}
-Formatting: {note_type.get('formatting', '')}
-Context: {note_type.get('context', '')}
+Formatting: {note_type['formatting']}
+Context: {note_type['context']}
 </formatting_context>
 
 <prompt_examples>
@@ -115,13 +114,10 @@ Time Estimate: 4-6 hours [?]
 - Any specific AI tools to focus on not indicated
 </prompt_examples>
 
-When processing input, apply the appropriate formatting as defined in the provided formatting guidelines. Always prioritize clarity, actionability, and ease of future reference. If any part of the input is unclear, mark it with [?] and include it in the "Unclear Points" section. For any identified action items, estimate time required if possible.""",
-        role="system"
-    )
+When processing input, apply the appropriate formatting as defined in the provided formatting guidelines. Always prioritize clarity, actionability, and ease of future reference. If any part of the input is unclear, mark it with [?] and include it in the "Unclear Points" section. For any identified action items, estimate time required if possible."""
 
-def refine_note_system_message(ai: AIServiceBase, note: str, original_message: str) -> Message:
-    return Message(
-        content=f"""Note Refinement Specialist
+def refine_note_system_message(ai: AIServiceBase, note: str, original_message: str) -> str:
+    return f"""Note Refinement Specialist
 
 You are an expert AI assistant specializing in refining and improving notes while preserving their original intent and structure.
 
@@ -151,6 +147,4 @@ Analyze, correct, and enhance the given note without altering its core meaning o
 {original_message}
 </original_message>
 
-Analyze the provided note and original message. Refine the note to improve clarity, correct errors, and eliminate ambiguity while strictly adhering to the prompt rules. Provide only the refined note as your output.""",
-        role="system"
-    )
+Analyze the provided note and original message. Refine the note to improve clarity, correct errors, and eliminate ambiguity while strictly adhering to the prompt rules. Provide only the refined note as your output."""
