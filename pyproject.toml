@@ -3,7 +3,7 @@ name = "pydevs"
 version = "0.1.0"
 description = "Community repo for AIdevs3"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 authors = [
     { name = "Piotr Święcik", email = "piotr.swiecik@gmail.com" },
 ]
@@ -22,7 +22,9 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+aiofiles = "^24.1"
+asyncio = "^3.4"
+python = "^3.11"
 openai = "^1.54.4"
 langfuse = "^2.53.9"
 fastapi = {extras = ["standard"], version = "^0.115.5"}

@@ -1,4 +1,6 @@
 import os
+
+from dotenv import load_dotenv
 from typing import Dict, List, Literal, Optional, BinaryIO
 
 from openai import OpenAI
@@ -10,9 +12,11 @@ from pydevs.types.completion import OpenAIMessage
 class OpenAIService(AIServiceBase):
     def __init__(self, api_key: Optional[str] = None, default_model="gpt-4o-mini"):
         if api_key is None:
+            load_dotenv()
             api_key = os.getenv("OPENAI_API_KEY")
         self._api_key = api_key
-        self._client = OpenAI(api_key=api_key)
+        self._client = OpenAI()
+        self._client.api_key = api_key
         self._default_model = default_model
 
     def text_completion(
