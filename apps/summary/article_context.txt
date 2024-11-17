@@ -1,0 +1,37 @@
+The article titled "Generatywne AI w praktyce" discusses the capabilities of generative AI in the context of image manipulation and generation. Here are the key points extracted from the content:
+
+### Overview of Generative AI in Graphics
+- Generative AI has advanced significantly in the last two years, particularly in generating and manipulating images.
+- Tools like **Midjourney** and **Stable Diffusion** are popular among designers and illustrators for creating new graphics.
+- Generative AI can enhance the quality of graphic design tasks, such as background removal and image editing.
+
+### Notable Tools and Projects
+- **Picthing**: A tool for effective background removal with improved quality, created by Theo from `t3.gg`.
+- **PhotoAI** and **InteriorAI** by **Pieter Levels**: Address specific problems and demonstrate usefulness through published statistics.
+
+### Current Image Generation Capabilities
+- The quality of AI-generated images has improved, but there are still limitations, such as generating text, hands, teeth, and reflections accurately.
+- More complex prompts tend to yield less predictable results, making it challenging to achieve desired outcomes consistently.
+- Examples of AI-generated images show both high quality and the potential for further refinement through multiple attempts.
+
+### Programming and API Access
+- Developers interested in using generative models should look for APIs (e.g., **Replicate**, **Leonardo.ai**) or self-hosting options (e.g., **RunPod**) to access models.
+- Templates can help automate the generation of graphics for marketing purposes, allowing for variations in different formats without manual effort.
+
+### Techniques for Prompt Design
+- Crafting effective prompts is essential for generating desired graphics. Short, keyword-focused prompts often work better than lengthy descriptions.
+- Combining strategies from different prompt styles can lead to successful outcomes in image generation.
+
+### Template-Based Graphic Generation
+- Tools like **htmlcsstoimage** enable the generation of graphics from HTML templates, allowing for dynamic text and image replacement.
+- This approach can integrate generative graphics with existing workflows for creating promotional materials.
+
+### Conclusion
+- Generative graphics tools can automate and enhance the image creation process, making them valuable even for those not directly involved in graphic design.
+- **ComfyUI** and **HTMLCSStoImage** are highlighted as particularly useful tools for developers looking to implement generative graphics into their projects.
+- The article emphasizes the importance of understanding how to leverage these tools in marketing and product development contexts.
+
+### Important Note
+- For those without the necessary hardware for using **ComfyUI** or who prefer not to use paid tools, a video tutorial might not be applicable.
+
+This summary encapsulates the primary themes and insights from the article regarding the practical applications of generative AI in graphics.

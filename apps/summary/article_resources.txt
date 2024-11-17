@@ -1,0 +1,31 @@
+The article titled "Generatywne AI w praktyce" discusses the practical applications of generative AI in image manipulation and creation. Here are the key points extracted from the content:
+
+### Overview of Generative AI Capabilities
+- **Text and Audio Processing**: Generative AI can effectively process text and audio, as well as interpret images.
+- **Image Manipulation and Generation**: The focus is on how generative AI can be used for creating and manipulating graphics and photos.
+
+### Tools and Examples
+1. **Picthing**: A tool for effectively removing backgrounds from images, showcasing significant quality improvements.
+2. **PhotoAI and InteriorAI by Pieter Levels**: Address specific problems in image processing and demonstrate their usefulness with published statistics.
+
+### Current Image Generation Capabilities
+- There has been substantial progress in generative graphics over the last two years, with improvements in quality, although some limitations remain, such as generating text, hands, and reflections accurately.
+- Generative models like **Flux** are improving but still have inconsistent results with complex prompts.
+
+### Techniques for Image Generation
+- **Prompt Design**: Generating images requires careful crafting of prompts, which vary significantly from traditional LLM prompts. Keywords and controlling flags are essential.
+- **ComfyUI**: A tool that allows for greater control over generated graphics, including the use of templates and reference images for maintaining style consistency.
+
+### Applications of Generative Graphics
+- **Template Generation**: Generative AI can create marketing materials in various formats based on templates, which is more efficient than manual design.
+- **Dynamic Content Creation**: Tools like **htmlcsstoimage** can generate graphics from HTML templates, allowing for dynamic updates of text and images.
+
+### Summary of Benefits
+- Generative graphics tools enable automation and specialized solutions for transforming images according to defined styles.
+- Tools like **ComfyUI** and **HTMLCSStoImage** intersect with programming, allowing for the development of advanced solutions that support marketing and product processes.
+
+### Conclusion
+The article emphasizes the importance of understanding generative graphics technologies, even for those not directly involved in graphic design, as they can significantly enhance marketing and product development processes.
+
+### Important Note
+The article concludes with a note for readers without access to suitable hardware for using ComfyUI, suggesting they may skip the accompanying video tutorial.

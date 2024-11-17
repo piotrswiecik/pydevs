@@ -1,0 +1,32 @@
+### Podsumowanie artykułu "Generatywne AI w praktyce"
+
+Artykuł omawia zastosowanie generatywnego AI w kontekście manipulacji i generowania grafik oraz zdjęć. Wskazuje na rozwój technologii w tej dziedzinie, który nastąpił w ciągu ostatnich dwóch lat, oraz na narzędzia, które mogą być użyteczne dla projektantów, programistów i twórców treści.
+
+#### Kluczowe punkty:
+
+1. **Zastosowania generatywnego AI w grafice:**
+   - Narzędzia takie jak **Midjourney** i **Stable Diffusion** są popularne wśród projektantów do tworzenia grafik.
+   - Przykłady użycia AI obejmują **picthing** do usuwania tła oraz projekty **PhotoAI** i **InteriorAI** od Pietera Levels, które rozwiązują konkretne problemy.
+
+2. **Wyzwania i ograniczenia:**
+   - Modele generujące obrazy mają trudności z tworzeniem precyzyjnych elementów, takich jak tekst czy dłonie.
+   - Złożone instrukcje (prompty) mogą prowadzić do mniej satysfakcjonujących wyników.
+
+3. **Dostępność modeli:**
+   - Istnieją platformy, takie jak **Replicate** i **Leonardo.ai**, które umożliwiają korzystanie z modeli AI przez API.
+   - Możliwość hostowania modeli na własnych serwerach z wykorzystaniem GPU, np. na platformach typu **RunPod**.
+
+4. **Generowanie grafik na podstawie szablonów:**
+   - Użycie szablonów HTML z narzędziami, takimi jak **htmlcsstoimage**, umożliwia dynamiczne generowanie grafik.
+   - Integracja z AI pozwala na automatyczne dostosowywanie grafik do różnych kontekstów.
+
+5. **Techniki projektowania promptów:**
+   - Tworzenie skutecznych promptów do generowania grafik wymaga użycia słów kluczowych i strategii, które mogą się różnić w zależności od narzędzia.
+   - Przykłady pokazują, jak różne podejścia do pisania promptów mogą wpływać na wyniki generowanych obrazów.
+
+6. **Zastosowanie w marketingu i automatyzacji:**
+   - Automatyzacja procesów związanych z grafiką może znacząco usprawnić działania marketingowe i produktowe.
+   - Narzędzia takie jak **ComfyUI** i **HTMLCSStoImage** mogą wspierać programistów w tworzeniu zaawansowanych rozwiązań.
+
+#### Wnioski:
+Generatywne AI otwiera nowe możliwości w zakresie tworzenia i manipulacji obrazami. Narzędzia takie jak **ComfyUI** i **htmlcsstoimage** są szczególnie istotne dla programistów, ponieważ umożliwiają integrację AI w procesy tworzenia treści. Artykuł podkreśla, że warto inwestować czas w naukę i eksperymentowanie z tymi technologiami, nawet jeśli nie jesteśmy bezpośrednio związani z grafiką.

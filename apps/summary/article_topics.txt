@@ -1,0 +1,42 @@
+The article titled "Generatywne AI w praktyce" discusses the capabilities and applications of generative AI in image manipulation and creation. Here are the key points extracted from the content:
+
+### Overview of Generative AI in Image Creation
+1. **Generative AI Applications**:
+   - Generative AI can process text, audio, and interpret images.
+   - It holds potential for generating and manipulating graphics and photos.
+
+2. **Tools and Examples**:
+   - **Midjourney** and **Stable Diffusion** are highlighted as tools for designers and illustrators.
+   - **Picthing**: A tool for background removal, showcasing improved quality through generative AI.
+   - **PhotoAI** and **InteriorAI** by Pieter Levels address specific problems and demonstrate utility through published statistics.
+
+3. **Current Image Generation Capabilities**:
+   - Significant advancements in generative graphics over the last two years.
+   - Challenges remain, particularly in generating specific elements (text, hands, reflections) and following complex prompts.
+
+4. **Use Cases**:
+   - Generating individual elements (textures, backgrounds) and editing existing images.
+   - The ability to create templates for marketing materials, allowing easy updates to images and text.
+
+### Technical Aspects
+1. **Model Availability**:
+   - Interest in API access and self-hosting options for models.
+   - Platforms like **Replicate** and **Leonardo.ai** for API access; **RunPod** for GPU hosting.
+
+2. **Prompt Design Techniques**:
+   - Effective prompts are crucial for generating desired images.
+   - Short and keyword-focused prompts are generally recommended, but experimentation is encouraged.
+
+3. **Generative Templates**:
+   - Using tools like **htmlcsstoimage** to generate graphics from HTML templates.
+   - The ability to dynamically replace text, images, and styles.
+
+### Conclusion
+- Generative graphics tools can automate and enhance image transformation processes.
+- **ComfyUI** and **HTMLCSStoImage** are particularly noteworthy for their intersection with programming.
+- Understanding how to leverage generative graphics models can significantly benefit marketing and product development processes.
+
+### Important Note
+- The article suggests that users without suitable hardware for working with **ComfyUI** may skip additional video content included in the article.
+
+This summary captures the essence of the article, emphasizing the potential of generative AI in graphic design and its practical applications.

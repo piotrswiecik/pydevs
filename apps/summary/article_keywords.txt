@@ -1,0 +1,27 @@
+### Podsumowanie artykułu "Generatywne AI w praktyce"
+
+Artykuł omawia zastosowanie generatywnego AI w kontekście tworzenia i manipulacji grafiką oraz zdjęciami. Oto kluczowe punkty:
+
+1. **Rozwój generatywnej grafiki**: W ciągu ostatnich dwóch lat zaobserwowano znaczący postęp w jakości generowanych obrazów. Współczesne modele, takie jak Midjourney i Stable Diffusion, umożliwiają tworzenie wysokiej jakości grafik, choć nadal mają swoje ograniczenia.
+
+2. **Przykłady narzędzi**: 
+   - **Picthing**: Narzędzie do usuwania tła ze zdjęć, które wykorzystuje generatywne AI do poprawy jakości tego procesu.
+   - **PhotoAI i InteriorAI**: Projekty Pietera Levels, które rozwiązują konkretne problemy i potwierdzają swoją użyteczność poprzez statystyki.
+
+3. **Obecne możliwości generowania obrazu**: 
+   - Modele AI potrafią generować obrazy z wysoką jakością, ale mają trudności z powtarzalnością w generowaniu szczególnych elementów (np. tekst, dłonie).
+   - Możliwość korzystania z API do integracji modeli AI w aplikacjach.
+
+4. **Techniki projektowania promptów**: 
+   - Generowanie grafik wymaga stosowania odpowiednich promptów, które powinny być zwięzłe i zawierać kluczowe słowa. Rekomendacje dotyczące długości promptów są różne, a eksperymentacja jest kluczowa.
+
+5. **Generowanie grafik w oparciu o szablony**: 
+   - Narzędzia takie jak HTMLCSStoImage umożliwiają tworzenie grafik na podstawie szablonów HTML, co pozwala na dynamiczne podmiany treści.
+
+6. **Automatyzacja procesów**: 
+   - Generatywna grafika może automatyzować procesy związane z marketingiem i tworzeniem treści, co zwiększa efektywność.
+
+7. **Zalecane narzędzia**: 
+   - **ComfyUI** i **HTMLCSStoImage** są szczególnie polecane ze względu na ich możliwości integracji z procesami programistycznymi.
+
+Artykuł podkreśla rosnącą rolę generatywnego AI w projektowaniu graficznym, a także zachęca do eksploracji narzędzi i technik, które mogą wspierać procesy twórcze i marketingowe.

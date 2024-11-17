@@ -1,0 +1,31 @@
+The article titled 'Generatywne AI w praktyce' discusses the capabilities of generative AI in graphic design and image generation. Here are the key points extracted:
+
+### Overview of Generative AI in Graphics
+- Generative AI can process text, audio, and interpret images, with a focus on graphic design and photo manipulation.
+- Tools like **Midjourney** and **Stable Diffusion** are primarily targeted at designers and illustrators.
+- The article highlights tools such as **picthing**, which improves background removal quality, and projects by **Pieter Levels** like **PhotoAI** and **InteriorAI**, showcasing practical applications of generative AI.
+
+### Current Capabilities of Image Generation
+- The development of generative graphics has advanced significantly over the past two years.
+- Limitations still exist, particularly in generating specific image elements (e.g., text, hands, reflections), although models like **Flux** are improving.
+- Generative models can produce high-quality images, but achieving desired results often requires extensive experimentation.
+
+### Technical Aspects
+- Models can be accessed through APIs or self-hosting options, with services like **Replicate** and **Leonardo.ai** for API access, and **RunPod** for GPU hosting.
+- Templates can be used for generating marketing materials, allowing for efficient creation of consistent designs across various formats.
+
+### Techniques for Prompt Design
+- Writing prompts for image generation differs from text-based models; they require keywords and control flags rather than detailed instructions.
+- Experimentation with prompt length and content is encouraged, as seen in examples from **Midjourney**.
+- The article discusses the use of **meta prompts**, which allow for consistent style while varying specific elements.
+
+### Generating Graphics Based on Templates
+- Tools like **htmlcsstoimage** enable dynamic graphic generation from HTML templates, integrating CSS for styling.
+- A workflow can be created to automate graphics generation based on events, such as blog posts or newsletters.
+
+### Conclusion
+- Generative graphic tools can automate and enhance the image transformation process, making them valuable even for those not directly involved in graphics.
+- **ComfyUI** and **HTMLCSStoImage** are highlighted as particularly useful for developers looking to integrate generative graphics into applications.
+- The potential applications of generative AI in marketing, product development, and design are emphasized.
+
+This summary encapsulates the main themes and insights from the article, focusing on the practical applications and technical aspects of generative AI in graphic design.
