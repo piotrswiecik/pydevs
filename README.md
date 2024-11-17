@@ -11,4 +11,9 @@ Ready apps:
 - summary
 
 TODO:
-Finish rest of the apps, 
+mentioned in S2E5:
+- captions
+- audio-map
+- audio-map-frontend
+- notes
+- linear
