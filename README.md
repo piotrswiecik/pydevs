@@ -12,6 +12,10 @@ Ready apps:
 - notes
 
 TODO:
+mentioned in S3E1:
+- text-splitter
+- unstructured
+
 mentioned in S2E5:
 - audio-map
 - audio-map-frontend
