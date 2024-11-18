@@ -46,8 +46,11 @@ class VectorDBService:
     def add_points(self, collection_name: str, points: List[Point]):
         for point in points:
             if not isinstance(point["id"], int):
-                logging.info("ID is not an integer, generating a new one as UUID4.")
-                point["id"] = str(uuid.uuid4())
+                try:
+                    uuid.UUID(point["id"])
+                except ValueError:
+                    logging.info("ID is not an integer or UUID4, generating a new random UUID4.")
+                    point["id"] = str(uuid.uuid4())
         payload = [
             {
                 "id": point["id"],
