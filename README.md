@@ -10,6 +10,7 @@ Ready apps:
 - read
 - summary
 - notes
+- qdrant
 
 TODO:
 mentioned in S3E1:
