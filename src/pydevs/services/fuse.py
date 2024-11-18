@@ -1,12 +1,10 @@
 import os
-from dotenv import load_dotenv
 from typing import Optional, Union, Any
 from langfuse import Langfuse
 from langfuse.client import StatefulTraceClient, StatefulClient, StatefulSpanClient, PromptClient
 
 class LangfuseService:
     def __init__(self, host: Optional[str] = None, secret_key: Optional[str] = None, public_key: Optional[str] = None):
-        load_dotenv()
         if host is None:
             host = os.environ.get("LANGFUSE_HOST")
             if host is None:
