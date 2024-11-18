@@ -31,6 +31,7 @@ fastapi = {extras = ["standard"], version = "^0.115.5"}
 httpx = "^0.27.2"
 python-dotenv = "^1.0.1"
 requests = "^2.32.3"
+qdrant-client = "^1.12.1"
 
 
 [tool.poetry.group.dev.dependencies]
