@@ -47,7 +47,7 @@ class VectorDBService:
         for point in points:
             if not isinstance(point["id"], int):
                 try:
-                    uuid.UUID(point["id"])
+                    uuid.UUID(str(point["id"]))
                 except ValueError:
                     logging.info("ID is not an integer or UUID4, generating a new random UUID4.")
                     point["id"] = str(uuid.uuid4())
@@ -64,6 +64,6 @@ class VectorDBService:
 
     def search(self, collection_name: str, query: str, limit=5):
         embedding = self._ep.text_embedding(query)
-        self._client.search(
+        return self._client.search(
             collection_name, query_vector=embedding, limit=limit, with_payload=True
         )
