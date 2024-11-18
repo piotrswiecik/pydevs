@@ -17,6 +17,7 @@ def openai_client():
     load_dotenv()
     return OpenAIService()
 
+
 @pytest.fixture
 def vector_db_client(openai_client):
     load_dotenv()

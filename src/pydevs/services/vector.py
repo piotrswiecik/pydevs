@@ -35,7 +35,9 @@ class VectorDBService:
         if not collection:
             self._client.create_collection(
                 collection_name,
-                vectors_config=VectorParams(size=OPENAI_EMBEDDING_SIZE, distance=Distance.COSINE),
+                vectors_config=VectorParams(
+                    size=OPENAI_EMBEDDING_SIZE, distance=Distance.COSINE
+                ),
             )
 
     def collection_exists(self, collection_name: str):
