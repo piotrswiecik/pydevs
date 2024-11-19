@@ -13,6 +13,14 @@ Ready apps:
 - qdrant
 
 TODO:
+mentioned in S3E2:
+- embedding
+- naive_rag
+- better_rag
+- rerank
+- semantic
+
+
 mentioned in S3E1:
 - text-splitter
 - unstructured
